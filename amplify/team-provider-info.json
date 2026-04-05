@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wirangular-dev-151251-authRole",
+      "UnauthRoleArn": "arn:aws:iam::527801330826:role/amplify-wirangular-dev-151251-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::527801330826:role/amplify-wirangular-dev-151251-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-wirangular-dev-151251-deployment",
+      "UnauthRoleName": "amplify-wirangular-dev-151251-unauthRole",
+      "StackName": "amplify-wirangular-dev-151251",
+      "StackId": "arn:aws:cloudformation:us-east-2:527801330826:stack/amplify-wirangular-dev-151251/00ed4870-902e-11ee-b588-0ad7eb34d3d5",
+      "AmplifyAppId": "d1gfcoptvpomma"
+    }
+  }
+}
