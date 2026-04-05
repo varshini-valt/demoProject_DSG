@@ -1,0 +1,45 @@
+<section *ngIf="showLoader" class="loaderwrp">
+  <div class="scale-loader">
+      <div class="dot-pulse"></div>
+  </div>
+</section>
+<header [ngClass]="showLanguageSwitcher ? 'language-switcher-grid justify-center logo w100 relative' : 'logo flex justify-center w100 relative'">
+    <div *ngIf="showBackButton">
+        <button (click)="backClicked()" class="back-icon absolute">
+            <img src="./assets/icons/Back-icon.svg" alt="back icon" width="24" height="24">
+        </button>
+    </div>
+  
+        <div class="flex justify-center logo-image">
+        <span style="font-size: 24px; font-weight: bold; color: var(--primary-blue, #0874E7);">DSG</span>
+    </div>
+    
+        <div *ngIf="showLanguageSwitcher" class="lang-swit">
+            <div class="lang-swit-tit">Language</div>
+            <mat-form-field appearance="outline" class="slct-boxes">
+                <mat-select (selectionChange)="languageChange($event)" [(ngModel)]="defaultLanguage" required
+                    placeholder="Please select">
+                    <mat-option *ngFor="let lang of languageData.langVal" [value]="lang.val">{{lang.lang}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <button class="logout-icon" *ngIf="registrationPage||thankyouPage" (click)="signoutPopup()">
+        <img src="assets/icons/logout-icon.svg" alt="Logout icon" width="24" height="24"/>
+        </button>
+</header>
+<div class="fixed-overlay" *ngIf="showSignoutPopup">
+    <div class="signout-popup relative">
+        <button class="signout-close" (click)="signoutPopup()">
+            <img src="assets/icons/close-icon.svg" alt="Close icon"/>
+        </button>
+        <p class="farro-header h5 mb12 mb8-700">Sign out</p>
+        <p class="mb28" *ngIf="registrationPage">Please submit the form before logging out</p>
+        <p class="mb28" *ngIf="thankyouPage">Are you sure you want to sign out?</p>
+          <!-- {{ registrationPage ? 'Please submit the form before logging out' : (thankyouPage ? 'Are you sure you want to sign out?' : '') }} -->
+        <div class="flex flex-column gap8">
+            <button class="primary-btn" aria-label="Yes" (click)="signout()">Yes</button>
+            <button class="secondary-btn" aria-label="No" (click)="signoutPopup()">No</button>
+        </div>
+    </div>
+</div>

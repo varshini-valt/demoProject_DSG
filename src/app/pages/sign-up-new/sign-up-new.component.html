@@ -1,0 +1,62 @@
+<app-red-shield-error *ngIf="maliciousUser === 'true'"></app-red-shield-error>
+<ng-container *ngIf="maliciousUser !== 'true'">
+<section *ngIf="showLoader" class="loaderwrp">
+    <div class="scale-loader">
+        <div class="dot-pulse"></div>
+    </div>
+  </section>
+  <app-header></app-header>
+  <div class="container relative btm-img-pad">
+    <div class="inner-content-wrap py24-700">
+      <div class="registration">
+        <div class="common-head mb44 mb28-700 px24-700">
+          <h1 class="farro-header mb8">{{formHeading}}</h1>
+          <div *ngIf="isExistingUser === 'true' && messageBoxopen" class="warning-info flex items-center gap16 mb44 mb28-700">
+            <img src="assets/icons/warning-icon.svg" alt="existing user message" class="info-icon"  />
+            <p class="warning-info-text">We've added a few quick questions to help us serve you better. It won't take long. Thanks for updating your info!</p>
+            <img src="assets/icons/warning-close.svg" alt="existing user message" class="cursor-pointer" (click)="messageBox()" />
+          </div>
+        </div>
+      </div>
+      <div class="stepper flex items-center">
+        <div class="step flex flex-column items-center gap4"
+          [ngClass]="{'active':currentNumber==1, 'completed':currentNumber==2 || currentNumber==3}">
+          <button class="step-circle flex items-center justify-center cursor-pointer" (click)="clickedReview(1)">
+            <p class="step-number font-bold">1</p>
+          </button>
+          <p class="step-label font-bold">Personal details</p>
+        </div>
+        <div class="step flex flex-column items-center gap4"
+        [ngClass]="{'active':currentNumber==2, 'completed': currentNumber==3}">
+          <button class="step-circle flex items-center justify-center cursor-pointer"
+          (click)="clickedReview(2)">
+            <p class="step-number font-bold">2</p>
+          </button>
+          <p class="step-label font-bold">Other details</p>
+        </div>
+        <div class="step flex flex-column items-center gap4"
+          [ngClass]="{'active':currentNumber==3}">
+          <button class="step-circle flex items-center justify-center cursor-pointer"
+          (click)="clickedReview(3)">
+            <p class="step-number font-bold">3</p>
+          </button>
+          <p class="step-label font-bold">Review details</p>
+        </div>
+      </div>
+      <div *ngIf="currentNumber === 1">
+         <app-personal-details (nextClicked)="onPersonalDetailsNext()"></app-personal-details>
+      </div>
+ 
+      <div *ngIf="currentNumber === 2">
+        <app-other-details
+        (nextClicked)="onOtherDetailsNext()"
+        (backClicked)="onOtherDetailsBack ()"
+        ></app-other-details>
+     </div>
+ 
+     <div *ngIf="currentNumber === 3">
+      <app-review-details (backClicked)="onReviewDetailsBack ()"></app-review-details>
+   </div>
+    </div>
+  </div>
+  </ng-container>

@@ -1,0 +1,328 @@
+.done-btn-cnr{
+    width: 100%;
+    margin: 8px auto 0;
+}
+.done-btn{
+    width: 100%;
+    border-radius: 108px;
+    border-width: 1px;
+    padding: 12px 28px;
+    font:20px/30px "Inter-Regular", serif;
+    transition: all 150ms ubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: none;
+    cursor: pointer;
+    opacity: 1;
+    border-color: var(--primary-blue);
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+.done-btn:hover{
+    border-color: var(--darkest-blue);
+    background-color: var(--darkest-blue);
+    opacity: 1;
+    color: var(--white);
+}
+.done-btn.btn--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.app-promo-bnr{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+}
+.app-promo-bnr-txt{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 0;
+}
+.app-promo-bnr-txt .thank-you-header{
+    font-size: 20px;
+    line-height: 26px;
+}
+.app-promo-qr-txt-para,
+.app-promo-bnr-item{
+    color: var(--primary-grey);
+}
+.app-promo-bnr-txt p,.app-promo-bnr-item,.app-promo-qr-txt-para, .ses-content p{
+    font-size: 14px;
+    line-height: 21px;  
+}
+.app-promo-bnr-list{
+    gap: 8px;
+    flex: 1 0 0;
+}
+.app-promo-bnr-item{
+    gap: 4px;
+}
+.app-promo-wrap{
+    gap: 16px;
+    align-self: stretch;
+}
+.app-promo-qr-img{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.app-promo-qr-img1,.app-promo-qr-img2{
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: var(--white);
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.051);
+    border-radius: 4px;
+}
+.app-promo-qr-img1 img,.app-promo-qr-img2 img{
+    width: 100%;
+    height: auto;
+    display:block;
+}
+.app-promo-qr-img-str{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.app-promo-qr-txt{
+    width: 372px;
+    text-align: center;
+}
+/* new IDP Live App cross-sell CSS */
+.ses-section{
+    background: var(--primary-blue);
+    position: relative;
+    border-radius: 16px;
+}
+.ses-img{
+    display: none;
+}
+.ses-stats{
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    padding: 24px 0;
+    gap: 40px;
+}
+.stats-count{
+    font-size: 112px;
+    line-height: 84px;
+    color: var(--dark-blue);
+}
+.stats-content{
+    font-size: 42px;
+    line-height: 32px;
+    color: var(--primary-blue);
+}
+.ses-list{
+    list-style-type: none;
+}
+.ses-content p, .ses-content h4{
+    color: var(--white);
+}
+.ses-section h4, .ses-content h4{
+    font-size: 20px;
+    line-height: 26px;
+}
+.app-promo{
+    padding: 10px;
+    background: var(--white);
+    border-radius: 4px;
+}
+.stats-bg{
+    border-top-left-radius: 15px;
+}
+.w-full{
+    width: 100%;
+}
+.h-full{
+    height: 100%;
+}
+.ses-container{
+    background: var(--light-blue);
+    border-radius: 16px;
+}
+.ses-wrapper{
+    max-width: calc(100% - 170px);
+}
+.ses-banner-img{
+    top: 0;
+    right: 0;
+    border-top-right-radius: 16px;
+}
+.ses-btn{
+    width: fit-content;
+    padding: 8px 20px;
+    font-family: "Inter-Regular", sans-serif !important;
+    height: 40px !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+}
+.ses-btn-img{
+    transform: rotate(180deg);
+}
+.ses-btn:hover{
+    text-decoration: unset;
+}
+.ses-sub-header{
+    font-size: 20px;
+    line-height: 26px;
+}
+.ses-leaf{
+    margin-top: 32px;
+}
+.promo-img-mob{
+    margin: 24px auto auto;
+}
+ @media only screen and (max-width: 1024px) {
+    .ses-list-tab, .download-btns{
+        display: flex;
+    }
+    .qr-wrapper{
+        display: none;
+    }
+    .promo-img-mob{
+        display: block;
+    }
+    .ses-features{
+        margin-bottom: 16px;
+    }
+ }
+@media only screen and (max-width: 700px) {
+    .app-promo-bnr{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .app-promo-qr-img{
+        gap: 12px;
+    }
+    .app-promo-qr-txt{
+        width: 100%;
+    }
+    .app-promo-qr-img1,.app-promo-qr-img2{
+        padding: 12px;
+    }
+    .done-btn{
+        padding: 8px 28px !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+    }
+    .ses-img-desktop{
+        max-height: 200px;
+        height: auto;
+        object-fit: contain;
+    }
+    .ses-stats{
+        gap: 24px;
+        padding: 16px 0 0;
+        top: 24px;
+        left: 24px;
+    }
+    .stats-count{
+        font-size: 72px;
+        line-height: 54px;
+    }
+    .stats-content{
+        font-size: 28px;
+        line-height: 24px;
+    }
+    .ses-content-mob{
+        padding: 24px;
+    /* padding: 32px 32px 24px; */
+    }
+    .ses-banner-img{
+        width: 58px;
+        height: 58px;
+        border-top-right-radius: 12px;
+    }
+    .ses-wrapper{
+        max-width: 100%;
+    }
+    .ses-container, .ses-section{
+        border-radius: 12px;
+    }
+    .stats-bg{
+        border-top-left-radius: 11px;
+    }
+    h3{
+        font-size: 20px;
+        line-height: 26px;
+    }
+    .ses-sub-header{
+        font-size: 18px;
+        max-width: calc(100% - 38px);
+    }
+    .ses-leaf{
+        margin-top: 24px;
+}
+}
+@media only screen and (max-width: 500px) {
+    .download-btns img{
+        width: 100%;
+    }
+    .ses-img{ 
+        display: block;
+    }
+     .ses-img-desktop{
+        display: none;
+    }
+
+}
+@media only screen and (max-width: 400px){
+    .ses-img{ 
+        width: 92%;
+    }
+    .ses-sub-header{
+        max-width: calc(100% - 58px);
+    }
+    .ses-btn{
+        padding: 8px 12px;
+        gap: 4px;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+@media only screen and (max-width: 380px){
+    .stats-count{
+        font-size: clamp(48px, 4vw, 64px) !important;
+        line-height: 1 !important;
+    }
+    .stats-content{
+        font-size: clamp(24px, 4vw, 34px) !important;
+        line-height: 1 !important;
+    }
+    .ses-content h4{
+        font-size: 18px;
+        line-height: 24px;
+    }
+   
+    .promo-img-mob{
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+    .ses-stats{
+        padding: 0;
+    }
+    .ses-btn{
+        font-size: 14px !important;
+        gap: 2px;
+        line-height: 16px !important;
+    }
+}
+
+@media only screen and (max-width: 310px){
+        .ses-section{
+            overflow: hidden;
+        }
+        .ses-img{
+            width: unset !important;
+        }
+        .ses-stats{
+            gap: 16px !important;
+        }
+}

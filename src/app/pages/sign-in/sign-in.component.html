@@ -1,0 +1,51 @@
+<app-red-shield-error *ngIf="maliciousUser === 'true'"></app-red-shield-error>
+<ng-container *ngIf="maliciousUser !== 'true'">
+<section *ngIf="showLoader" class="loaderwrp">
+    <div class="scale-loader">
+        <div class="dot-pulse"></div>
+    </div>
+  </section>
+<app-header (languageChanged)="languageChanged($event)"></app-header>
+<div class="container relative height-100vh">
+    <div class="inner-content-wrap">
+        <div class="demo-banner" style="background-color: #f0f4ff; border: 1px solid #c2d6f2; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px;">
+            <p style="font-size: 14px; color: #1a1a1a; line-height: 1.7; margin: 0;">
+                <strong>About this project:</strong> This application was built as part of a demonstration project during my probation period, prior to being confirmed as a permanent employee.
+            </p>
+            <ul style="font-size: 14px; color: #1a1a1a; line-height: 1.7; margin: 8px 0 0 16px; padding: 0;">
+                <li>No live APIs or backend services are connected — the entire application operates on mock data with a graceful fallback mechanism.</li>
+                <li>All error handling, authentication flows (sign-up, sign-in, forgot password), and edge-case scenarios are fully implemented and can be reviewed throughout the codebase.</li>
+                <li>After completing the sign-up flow, returning to sign in with the same credentials will auto-populate the registration form with previously entered data — as long as the page has not been refreshed, since all state is managed in-memory via a shared Angular service.</li>
+            </ul>
+            <p>Click the below link for demo video:</p>
+            <a href="assets/DSG Demo video.mp4" target="_blank">Demo Video</a>
+        </div>
+        <div class="login">
+            <h1 class="farro-header mb8">{{welcomeHeading}}</h1>
+            <p class="mb44 mb32-1100">{{enterEmail}}</p>
+            <div class="login-field mb24">
+                <form [formGroup]="signInFormGroup">
+                     <ng-container *ngFor="let ppQuestion of questions">
+                        <div *ngIf="ppQuestion.mappingField === 'primary_email'">
+                            <label for="email" class="label-txt">{{ppQuestion.label}}</label>
+                            <mat-form-field>
+                                <input 
+                                (blur)="onInputString(ppQuestion.mappingField, $event)"
+                                [ngClass]="{'input-error':(this.signInFormGroup.get('emailAddress')?.hasError('required')|| this.signInFormGroup.get('emailAddress')?.hasError('pattern')) && submitted}" 
+                                matInput placeholder="{{ppQuestion.defaultValue}}" id="email"
+                                formControlName="emailAddress">
+                            </mat-form-field>
+                            <div class="reg-err"
+                                *ngIf="(signInFormGroup.get('emailAddress')?.hasError('required') || signInFormGroup.get('emailAddress')?.hasError('pattern')) && submitted">
+                                {{ppQuestion.helpText}}</div>
+                        </div>
+                        </ng-container>
+                </form>
+            </div>
+            <div class="login-btn-cnr">
+                <button class="login-btn" (click)="nextpage()" id="signinNext">{{nextButton}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+</ng-container>

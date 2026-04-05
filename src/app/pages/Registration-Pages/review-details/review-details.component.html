@@ -1,0 +1,84 @@
+<section *ngIf="showLoader" class="loaderwrp">
+    <div class="scale-loader">
+        <div class="dot-pulse"></div>
+    </div>
+  </section>
+ 
+<div class="px24-700">
+    <div class="mb44 mb28-700">
+        <p class="ques-hd sub-head">Personal details</p>
+        <div class="flex gap8 items-start mb12 mb8-700">
+         <ng-container *ngFor="let ppQuestion of questions">
+            <ng-container *ngFor="let key of (allData | keyvalue)">
+                <div class="flex items-center gap8 flex-1" *ngIf="key.key===ppQuestion.mappingField && (ppQuestion.mappingField === 'first_name' || ppQuestion.mappingField === 'last_name')">
+                        <div class="flex-1" *ngIf="ppQuestion.mappingField === 'first_name'">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+                        </div>
+                        <div class="flex-1" *ngIf="ppQuestion.mappingField === 'last_name'">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+                        </div>
+                    </div>
+              </ng-container>
+        </ng-container>
+            </div>
+
+        <ng-container *ngFor="let ppQuestion of questions">
+            <ng-container *ngFor="let key of (allData | keyvalue)">
+                <div class="mb12 mb8-700" *ngIf="key.key===ppQuestion.mappingField && (
+                ppQuestion.mappingField === 'date_of_birth' || ppQuestion.mappingField === 'primary_mobile_number' 
+                )">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p *ngIf="(ppQuestion.mappingField === 'date_of_birth')">{{ key.value.option_label }}</p>
+                            <p *ngIf="(ppQuestion.mappingField === 'primary_mobile_number')">{{ this.phoneNumber }}</p>
+              </div>
+            </ng-container>
+            </ng-container>
+
+        <div class="flex gap8 items-start">
+        <ng-container *ngFor="let ppQuestion of questions">
+            <ng-container *ngFor="let key of (allData | keyvalue)">
+                <div class="flex items-center gap8 flex-1 mb12 mb8-700" *ngIf="key.key===ppQuestion.mappingField && (ppQuestion.mappingField === 'maritalStatus' || ppQuestion.mappingField === 'gender')">
+                        <div class="flex-1" *ngIf="ppQuestion.mappingField === 'gender'">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+                        </div>
+                        <div class="flex-1" *ngIf="ppQuestion.mappingField === 'maritalStatus'">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+                        </div>
+                    </div>
+              </ng-container>
+        </ng-container>
+            </div>
+
+        <ng-container *ngFor="let ppQuestion of questions">
+            <ng-container *ngFor="let key of (allData | keyvalue)">
+                <div class="mb12 mb8-700" *ngIf="key.key===ppQuestion.mappingField && (ppQuestion.mappingField === 'passport' 
+                || ppQuestion.mappingField === 'nationalityCode' || ppQuestion.mappingField === 'preferredStudyLevel'
+                || ppQuestion.mappingField === 'studyPlanTimeline' || ppQuestion.mappingField === 'preferredCountryCode' 
+                )">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+              </div>
+            </ng-container>
+            </ng-container>
+    </div>
+ 
+    <div class="mb44 mb28-700">
+        <p class="ques-hd sub-head">Other details</p>
+        <ng-container *ngFor="let ppQuestion of questions">
+            <ng-container *ngFor="let key of (allData | keyvalue)">
+                <div class="mb12 mb8-700" *ngIf="key.key===ppQuestion.mappingField && (ppQuestion.mappingField === 'primaryFinancialSource'|| ppQuestion.mappingField === 'howDidYouHear')">
+                            <p class="font-bold mb4">{{ ppQuestion.label}}</p>
+                            <p>{{ key.value.option_label }}</p>
+                </div>
+              </ng-container>
+        </ng-container>
+    </div>
+    <div class="primary-btn-cnr flex gap12 mt44 mt28-700">
+    <button class="secondary-btn" (click)="backButton ()">Back</button>
+    <button class="primary-btn" (click)="submitRegistrationForm ()">Submit</button>
+</div>
+</div>

@@ -1,0 +1,3 @@
+::ng-deep .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]):focus~.mdc-checkbox__background{
+    border-color: var(--primary-blue) !important;
+}

@@ -1,0 +1,22 @@
+<div class="evnt_lnd err_pg">
+    <picture>
+        <source media="(max-width: 667px)" srcset="./assets/img/page-not-found-667.jpg" class="evnt_bnr">
+        <source media="(max-width: 768px)" srcset="./assets/img/page-not-found-768.jpg" class="evnt_bnr">
+        <img src="./assets/img/page-not-found-1366.jpg" alt="page not found image" class="evnt_bnr">
+    </picture>
+    <div class="evnt_wrp">
+        <div class="logo_wrp">
+            <span style="font-size: 28px; font-weight: bold; color: #fff;">DSG</span>
+        </div>
+        <div class="">
+            <h1>404</h1>
+            <h3>Sorry about that</h3>
+            <div class="evnt_cnt">
+                The page you’re looking for is not available. Try Again
+            </div>
+             <button *ngIf="!registrationPage" class="secondary-btn error-page-btn" (click)="routeToHomePage()">Back to Home</button>
+             <button *ngIf="registrationPage" class="secondary-btn error-page-btn" (click)="routeToRegistrationPage()">Back to Registration</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,134 @@
+/* .evnt_lnd.err_pg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+}
+.evnt_lnd {
+    font-family: "Inter-Light";
+    position: relative;
+    font-size: 16px;
+}
+.evnt_lnd.err_pg:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: rgba(51, 63, 72, 0.6);
+    width: 100%;
+}
+.evnt_bnr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+.evnt_hdr {
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #333F48;
+  }
+  .evnt_hdr .evnthdr_wrp {
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    padding: 15px 0;
+    max-width: 1170px;
+    margin: 0 auto;
+    color: #fff;
+  }
+  .evnt_lnd {
+    font-family: "Inter-Light", sans-serif;
+    position: relative;
+    font-size: 16px;
+    margin-top: 80px;
+  }
+  .evnt_lnd.err_pg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+  }
+  .evnt_lnd.err_pg:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: rgba(51, 63, 72, 0.6);
+    width: 100%;
+  }
+  .evnt_lnd.err_pg .evnt_wrp {
+    position: relative;
+    z-index: 9;
+    max-width: 550px;
+    text-align: center;
+    color: #fff;
+    top: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0 20px;
+  }
+  .evnt_lnd.err_pg .logo_wrp {
+    margin-bottom: 38px;
+  }
+  .evnt_lnd.err_pg h3 {
+    font-size: 28px;
+    margin-bottom: 23px;
+    line-height: 32px;
+  }
+  .evnt_bnr_wrp:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(51, 63, 72, 0.6);
+    width: 100%;
+  }
+  .evnt_bnr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .evnt_wrp {
+    z-index: 9;
+    position: relative;
+    color: #333F48;
+    background: #fff;
+    text-align: left;
+    
+  }
+  .evnt_wrp h3, .evnt_wrp h1, .error-header, .error-email{
+    text-align: center;
+    color: #fff;
+  }
+
+  .evnt_cntnr {
+    padding: 45px 0 25px;
+    max-width: 1170px;
+    margin: 0 auto;
+  }
+  .evnt_wrp .pgsec_hrd, .evnt_wrp h2 {
+    color: #1E3EC1;
+    font-size: 36px;
+    margin-bottom: 15px;
+    font-family: "Inter-Bold", sans-serif;
+  }
+
+
+ 

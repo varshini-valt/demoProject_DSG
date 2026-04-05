@@ -1,0 +1,35 @@
+<section *ngIf="showLoader" class="loaderwrp">
+  <div class="scale-loader">
+      <div class="dot-pulse"></div>
+  </div>
+</section>
+
+<div class="px24-700">
+  <form [formGroup]="otherDetailsForm">
+            <ng-container *ngFor="let ppQuestion of questions">
+              <div class="ques-wrap mb44 mb28-700" *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'primaryFinancialSource'|| ppQuestion.mappingField === 'howDidYouHear'">
+                <label class="ques-hd d-inline-block font-bold">{{ppQuestion.label}} </label>
+                <p class="mb8 help-text d-inline-block">{{ppQuestion.defaultValue}}</p>
+
+              <mat-chip-listbox class="tag-list" 
+              formControlName="{{ppQuestion.mappingField}}"
+              id="{{ppQuestion.mappingField}}" [ngClass]="ppQuestion.mappingField ==='howDidYouHear' ? 'mode-chip' : ''" [attr.aria-label]="ppQuestion.label">
+                <mat-chip-option tabindex="0" [aria-label]="ppQuestion.options.option_label" class="tag" *ngFor="let optionValue of ppQuestion.options"
+                  [value]="optionValue.option_label"
+                  (selectionChange)="onInputChange(ppQuestion.mappingField, optionValue, $event)">
+                  {{optionValue.option_label}}
+                </mat-chip-option>
+              </mat-chip-listbox>
+                
+                <div class="reg-err"
+                  *ngIf="otherDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                  {{ppQuestion.helpText}}</div>
+                </div>
+            </ng-container>
+
+        <div class="primary-btn-cnr flex gap12 mt44 mt28-700">
+            <button class="secondary-btn" (click)="backButton ()" >Back</button>
+            <button class="primary-btn" (click)="nextButton()">Next</button>
+        </div>
+    </form>
+</div>

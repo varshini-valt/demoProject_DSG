@@ -1,0 +1,230 @@
+<section *ngIf="showLoader" class="loaderwrp">
+  <div class="scale-loader">
+      <div class="dot-pulse"></div>
+  </div>
+</section>
+ 
+   <div class="px24-700">
+    <form [formGroup]="personalDetailsForm">
+        <div class="registration">
+          <div class="reg-wrap mb44 mb28-700">
+          <ng-container *ngFor="let ppQuestion of questions">
+ 
+             
+              <h2 class="ques-hd" *ngIf="ppQuestion.mappingField === 'title'"> {{ppQuestion.label}}</h2>
+<ng-container *ngIf="ppQuestion.mappingField === 'title' || ppQuestion.mappingField === 'first_name' || ppQuestion.mappingField === 'last_name'">
+              <div [ngClass]="{'first-name-field' : ppQuestion.mappingField === 'first_name' , 'last-name-field': ppQuestion.mappingField === 'last_name'}">
+                  <div class="flex flex-column flex-1" *ngIf="ppQuestion.mappingField === 'first_name'">
+                  <label for="firstname" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                  <mat-form-field>
+                    <input [ngClass]="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted?'input-error':''"
+                    matInput id="firstname"
+                    aria-label="first name"
+                    formControlName="{{ppQuestion.mappingField}}"
+                    (blur)="onInputString(ppQuestion.mappingField, $event)"
+                    (keydown.enter)="preventEnter($event)">
+                  </mat-form-field>
+                  <div class="reg-err"
+                              *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                              {{ppQuestion.helpText}}
+                            </div>
+                    </div>
+ 
+                    <div class="flex flex-column flex-1" *ngIf="ppQuestion.mappingField === 'last_name'">
+                      <label for="lastname" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                      <mat-form-field>
+                        <input [ngClass]="{'input-error':personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required')&&submitted}"
+                        matInput id="lastname"
+                        aria-label="last name"
+                        [formControlName]="ppQuestion.mappingField"
+                        (blur)="onInputString(ppQuestion.mappingField, $event)"
+                        (keydown.enter)="preventEnter($event)">
+                        <div class="reg-err"
+                              *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                              {{ppQuestion.helpText}}
+                            </div>
+                      </mat-form-field>
+                        </div>
+                  </div>
+                </ng-container>
+ 
+              <div class="ques-wrap w144 w114 mr8 mb8 dialcode" *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'dialCode'">
+                  <p class="mb4">{{ppQuestion.label}}</p>
+                  <div class="cntry-code">
+                    <mat-form-field appearance="outline" class="slct-boxes">
+                      <mat-select (selectionChange)="phoneNumberValidation($event.value)"
+                        formControlName="{{ppQuestion.mappingField}}"
+                        placeholder="{{ppQuestion.defaultValue}}" aria-label="{{ppQuestion.label}}">
+                        <mat-option *ngFor="let optionValue of ppQuestion.options"
+                        [value]="optionValue"
+                        (click)="onInputChange(ppQuestion.mappingField, optionValue)"
+                        id="{{optionValue}}">
+                          {{optionValue.dialCode}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="reg-err"
+                              *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                              {{ppQuestion.helpText}}
+                            </div>
+                  </div>
+                  </div>
+   
+              <div class="wmob d-inline-block mb8" *ngIf="ppQuestion.mappingField === 'primary_mobile_number'">
+                        <p *ngIf="ppQuestion.mappingField === 'primary_mobile_number'" class="mb4">{{ppQuestion.label}}</p>
+                            <mat-form-field>
+                              <input [ngClass]="{'input-error':(personalDetailsForm.get(ppQuestion.mappingField)?.hasError('invalidPhoneNumber')
+                                ||personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required')) && submitted}"
+                              matInput maxlength="{{ppQuestion.maxLength}}"
+                              (keyup)="phoneNumber(ppQuestion.mappingField)"
+                              matInput id="primary_mobile_number"
+                              aria-label="primary mobile number"
+                              formControlName="{{ppQuestion.mappingField}}"
+                              (blur)="onInputString(ppQuestion.mappingField, $event)"
+                              (keydown.enter)="preventEnter($event)">
+                            </mat-form-field>
+                            <span class="reg-err"
+  *ngIf="ppQuestion.mappingField === 'primary_mobile_number' &&
+         personalDetailsForm.get(ppQuestion.mappingField)?.hasError('invalidPhoneNumber') &&
+         submitted">
+  {{phoneNumberInvalidError}}
+</span>
+                              <div class="reg-err"
+                              *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                              {{ppQuestion.helpText}}
+                            </div>
+                  </div>
+           
+              <div class="mb44 mb28-700 dob-field" *ngIf="ppQuestion.mappingField === 'date_of_birth'">
+            <label for="picker" class="mb4 d-inline-block">{{ppQuestion.label}}<span class="optional-text"> (Optional)</span></label>
+              <mat-form-field [ngClass]="{'date-error':(invalidDate || futureDate) && submitted}"
+              appearance="fill" class="custom-date-wrapper date-error">
+                <input
+                formControlName="{{ppQuestion.mappingField}}"
+                [max]="yesterdayDate"
+                (dateChange)="onDateChange($event)"
+                (keydown.enter)="preventEnter($event)"
+                matInput [matDatepicker]="picker" class="date-picker-input"
+                aria-label="Date of birth" />
+                <mat-datepicker-toggle matIconSuffix matSuffix [for]="picker" class="custom-date">
+              </mat-datepicker-toggle>
+                <mat-datepicker  (blur)="onInputString(ppQuestion.label, $event)" #picker
+                panelClass="custom-datepicker">
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel class="calendar-btn secondary-btn">Cancel</button>
+                    <button mat-raised-button color="primary" matDatepickerApply class="calendar-btn primary-btn">Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+              <div class="reg-err"
+              *ngIf="(invalidDate && submitted)">
+                Please enter a valid Date of Birth.
+              </div>
+              <div class="reg-err"
+              *ngIf="(futureDate && submitted && !invalidDate)">
+                Please enter a valid Date of Birth. The date must be in the past.
+              </div>
+                  </div>
+ 
+         
+ 
+            <div class="ques-wrap"  [ngClass]="ppQuestion.mappingField === 'gender' ? 'mb12' :'mb44 mb28-700'" *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'gender'|| ppQuestion.mappingField === 'passport'|| ppQuestion.mappingField === 'preferredCountryCode' || ppQuestion.mappingField === 'preferredStudyLevel'">
+              <label class="ques-hd d-inline-block">{{ppQuestion.label}} <span *ngIf="ppQuestion.mappingField === 'gender'" class="optional-text">(Optional)</span> </label>
+ 
+            <mat-chip-listbox class="tag-list" formControlName="{{ppQuestion.mappingField}}" id="{{ppQuestion.mappingField}}" [attr.aria-label]="ppQuestion.label">
+              <mat-chip-option tabindex="0" [aria-label]="ppQuestion.options.option_label" class="tag" *ngFor="let optionValue of ppQuestion.options" id="{{optionValue.option_value}}"
+                [value]="optionValue.option_label"
+                (selectionChange)="onInputChange(ppQuestion.mappingField, optionValue, $event)">
+                {{optionValue.option_label}}
+              </mat-chip-option>
+            </mat-chip-listbox>
+             
+              <div class="reg-err"
+                *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                {{ppQuestion.helpText}}
+              </div>
+              </div>
+ 
+
+ 
+            <div class="ques-wrap dropdown-field mb44 mb28-700" *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'maritalStatus' || ppQuestion.mappingField === 'studyPlanTimeline' ">
+              <label class="ques-hd d-inline-block font-bold">{{ppQuestion.label}} <span *ngIf="ppQuestion.mappingField === 'maritalStatus'" class="optional-text">(Optional)</span></label>
+              <p class="mb4">{{ppQuestion.defaultValue}}</p>
+              <mat-form-field [ngClass]="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted?'slct-boxes input-error':'slct-boxes'">
+                <mat-select formControlName="{{ppQuestion.mappingField}}"
+                id="{{ppQuestion.mappingField}}" aria-label="{{ppQuestion.label}}"
+                >
+                  <mat-option *ngFor="let optionValue of ppQuestion.options"
+                  [value]="optionValue.option_label"
+                  (click)="onInputChange(ppQuestion.mappingField, optionValue)"
+                  id="{{optionValue.option_value}}">
+                    {{optionValue.option_label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="reg-err"
+                *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                {{ppQuestion.helpText}}
+              </div>
+              <p *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'maritalStatus'" class="mt12">*We collect information on gender and marital status to better understand your background and support your journey with DSG. <button class="link-text font-regular" (click)="openLearnMorePopup()">Learn more</button></p>
+              </div>  
+          <div class="ques-wrap dropdown-field mb44 mb28-700"
+     *ngIf="ppQuestion.displayFormat.value === 'SELECT_BOX' && ppQuestion.mappingField === 'nationalityCode' ">
+     <label class="ques-hd d-inline-block font-bold">{{ppQuestion.label}}</label>
+  <p class="mb4">{{ppQuestion.defaultValue}}</p>
+
+  <mat-form-field
+    [ngClass]="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted ? 'slct-boxes input-error' : 'slct-boxes'">
+
+    <mat-select formControlName="{{ppQuestion.mappingField}}" id="{{ppQuestion.mappingField}}" #select aria-label="{{ppQuestion.label}}">
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="searchFilterCtrl"
+          noEntriesFoundLabel="No results found">
+        </ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let optionValue of filteredOptions | async"
+                  [value]="optionValue.option_label"
+                  (click)="onInputChange(ppQuestion.mappingField, optionValue)"
+                  id="{{optionValue.option_value}}">
+        {{optionValue.option_label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="reg-err"
+       *ngIf="personalDetailsForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+    {{ppQuestion.helpText}}
+  </div>
+</div>
+
+ 
+          </ng-container>
+        </div>
+        <div class="primary-btn-cnr">
+          <button class="primary-btn" (click)="nextButton()">Next</button>
+          </div>
+        </div>
+      </form>
+    </div>
+ 
+    <div class="fixed-overlay" *ngIf="showLearnMorePopup">
+    <div class="learn-more-popup relative">
+        <p class="farro-header h5 mb12 mb8-700">Why do we collect information about you?</p>
+        <div class="mb28 mb24-700">
+          <p>This information helps us to:</p>
+          <br>
+          <p class="font-bold">Tailor our guidance and support</p>
+          <p>Including course recommendations, student services, and accommodation options.</p>
+          <br>
+          <p class="font-bold">Assist with visa and travel requirements</p>
+          <p>As some study destinations have specific immigration rules for married students or accompanying spouses. Providing your marital status enables us to offer accurate advice and ensure smoother processing for your chosen destination.</p>
+          <br>
+          <p class="font-bold">Contribute to inclusive planning and reporting</p>
+          <p>Helping us improve service delivery and meet diversity, equity, and regulatory expectations. Providing gender and marital status information is optional, and you may choose "Prefer not to say" if preferred. Your personal data will be handled securely and in accordance with applicable data protection laws and our institutional privacy policies.”</p>
+        </div>
+        <div class="flex flex-column gap8">
+            <button class="primary-btn text-uppercase" aria-label="OK" (click)="closeLearnMorePopup()">OK</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<app-red-shield-error *ngIf="maliciousUser === 'true'"></app-red-shield-error>
+<ng-container *ngIf="maliciousUser !== 'true'">
+<section *ngIf="showLoader" class="loaderwrp">
+  <div class="scale-loader">
+      <div class="dot-pulse"></div>
+  </div>
+</section>
+<app-header></app-header>
+<div class="container relative btm-img-pad">
+    <div class="inner-content-wrap">
+      <form [formGroup]="qrSigninForm">
+        <div class="registration">
+          <div class="common-head mb44 mb28-700">
+            <h1 class="farro-header mb8">Sign in</h1>
+            <p>Sign in with your existing DSG account</p>
+          </div>
+          <ng-container *ngFor="let ppQuestion of questions">
+            <div class="reg-wrap mb8 relative" *ngIf="ppQuestion.mappingField === 'primary_email'">
+                <label for="email" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                <mat-form-field>
+                <input 
+                [ngClass]="{'input-error':(qrSigninForm.get(ppQuestion.mappingField)?.hasError('required') || qrSigninForm.get(ppQuestion.mappingField)?.hasError('pattern') || userNotFound) && submitted}" 
+                matInput id="email"
+                (blur)="onInputString(ppQuestion.mappingField, $event)"
+                formControlName="{{ppQuestion.mappingField}}">
+                </mat-form-field>
+                  <div class="reg-err"
+                  *ngIf="userNotFound">
+                  Please check that your email address is correct. Sign up instead?</div>
+                  <div class="reg-err"
+                     *ngIf="(qrSigninForm.get(ppQuestion.mappingField)?.hasError('required') || qrSigninForm.get(ppQuestion.mappingField)?.hasError('pattern')) && submitted && !userNotFound">
+                      {{ppQuestion.helpText}}</div>
+                  </div>
+            <div class="reg-wrap mb8 relative password-field" *ngIf="ppQuestion.mappingField === 'password'">
+                <label for="password" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                <mat-form-field>
+                <input 
+                [ngClass]="{'input-error':(qrSigninForm.get(ppQuestion.mappingField)?.hasError('required') || wrongPassword) && submitted}" 
+                [type]="isPasswordTextFieldType ? 'text' : 'password'" 
+                formControlName="{{ppQuestion.mappingField}}"
+                matInput id="password">
+            </mat-form-field>
+            <button *ngIf="isPasswordTextFieldType" class="qr-password-toggle" (click)="togglePassword()" type="button" aria-label="Hide password">
+                <img src="./assets/icons/toggle-on.svg" alt="Hide password"/>
+            </button>
+             <button *ngIf="!isPasswordTextFieldType" class="qr-password-toggle" (click)="togglePassword()" type="button" aria-label="Show password">
+                <img src="./assets/icons/toggle-off.svg" alt="Show password"/>
+            </button>
+            <div class="reg-err"
+            *ngIf="qrSigninForm.get(ppQuestion.mappingField)?.hasError('required') && submitted && !wrongPassword">
+            {{ppQuestion.helpText}}</div>
+            <div class="reg-err"
+                  *ngIf="wrongPassword">
+                  The password you have entered is incorrect.</div>
+            </div>
+          </ng-container>
+            <div class="text-end mb44 mb28-700">
+                <a  routerLink="/qrForgotPwd" class="link-highlight font-bold">Forgot password?</a>
+            </div>
+            <div class="mb16">
+                <button class="primary-btn" type="submit" [disabled]="userSigningIn" (click)="signInSubmit()">Sign in</button>
+              </div>
+              <div class="flex items-center justify-center gap8">
+                <p class="qr-help-text">Don't have an account?</p>
+                <a routerLink="/qrSignup" class="link-highlight">Sign up</a>
+              </div>
+        </div>
+       </form>
+    </div>
+</div>
+</ng-container>

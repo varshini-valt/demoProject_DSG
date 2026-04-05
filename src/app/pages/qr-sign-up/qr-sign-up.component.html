@@ -1,0 +1,124 @@
+<app-red-shield-error *ngIf="maliciousUser === 'true'"></app-red-shield-error>
+<ng-container *ngIf="maliciousUser !== 'true'">
+<section *ngIf="showLoader" class="loaderwrp">
+  <div class="scale-loader">
+      <div class="dot-pulse"></div>
+  </div>
+</section>
+<app-header></app-header>
+<div class="container relative btm-img-pad">
+    <div class="inner-content-wrap mb24i">
+      <form [formGroup]="qrSignupForm">
+        <div class="registration">
+          <div class="common-head mb44 mb28-700">
+            <h1 class="farro-header mb8">Sign up</h1>
+            <p>Create a DSG account to get started with your in-person counselling session.</p>
+          </div>
+          <div class="reg-wrap mb8 flex gap8 flex-column-700">
+            <ng-container *ngFor="let ppQuestion of questions">
+                <ng-container *ngIf="ppQuestion.mappingField === 'first_name' || ppQuestion.mappingField === 'last_name'">
+                    <div *ngIf="ppQuestion.mappingField === 'first_name'" class="flex flex-column flex-1">
+                        <label for="first_name" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                        <mat-form-field>
+                            <input 
+                            (blur)="onInputString(ppQuestion.mappingField, $event)"
+                            formControlName="{{ppQuestion.mappingField}}"
+                            [ngClass]="{'input-error':qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') && submitted}"
+                             matInput id="first_name"
+                             formControlName="{{ppQuestion.mappingField}}">
+                        </mat-form-field>
+                        <div class="reg-err"
+                  *ngIf="qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                  {{ppQuestion.helpText}}</div>
+                    </div>
+                    <div *ngIf="ppQuestion.mappingField === 'last_name'" class="flex flex-column flex-1">
+                        <label for="lastname" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                        <mat-form-field>
+                          <input 
+                          (blur)="onInputString(ppQuestion.mappingField, $event)"
+                          [ngClass]="{'input-error':qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') && submitted}"
+                          formControlName="{{ppQuestion.mappingField}}"
+                          matInput id="lastname">
+                        </mat-form-field>
+                        <div class="reg-err"
+                  *ngIf="qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                  {{ppQuestion.helpText}}</div>
+                    </div>
+                </ng-container>
+              </ng-container>
+          </div>
+          <ng-container *ngFor="let ppQuestion of questions">
+            <div *ngIf="ppQuestion.mappingField === 'primary_email'" class="reg-wrap mb8 relative">
+                <label for="emailId" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                <mat-form-field>
+                <input 
+                (blur)="onInputString(ppQuestion.mappingField, $event)"
+                formControlName="{{ppQuestion.mappingField}}"
+                [ngClass]="{'input-error':(qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') || qrSignupForm.get(ppQuestion.mappingField)?.hasError('pattern') || existingUser) && submitted}"  
+                matInput id="emailId">
+                </mat-form-field>
+                <div class="reg-err"
+                                *ngIf="(qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') || qrSignupForm.get(ppQuestion.mappingField)?.hasError('pattern')) && submitted && !existingUser">
+                                {{ppQuestion.helpText}}</div>
+                <div class="reg-err"
+                  *ngIf="existingUser">
+                  Your email address already exists. Please proceed to sign in</div>
+            </div>
+            <div *ngIf="ppQuestion.mappingField === 'password'" class="reg-wrap mb44 mb28-700 relative password-field">
+                <label for="signupPassword" class="mb4 d-inline-block">{{ppQuestion.label}}</label>
+                <mat-form-field>
+                <input 
+                [ngClass]="{'input-error':(qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') || invalidPasswordException || !qrSignupForm.controls[ppQuestion.mappingField].valid) && submitted}"
+                formControlName="{{ppQuestion.mappingField}}"
+                [type]="isPasswordTextFieldType ? 'text' : 'password'" matInput id="signupPassword" aria-label="Password">
+            </mat-form-field>
+            <button *ngIf="isPasswordTextFieldType" class="qr-password-toggle" (click)="togglePassword()" type="button" aria-label="Hide password">
+                <img src="./assets/icons/toggle-on.svg" alt="Hide password"/>
+            </button>
+             <button *ngIf="!isPasswordTextFieldType" class="qr-password-toggle" (click)="togglePassword()" type="button" aria-label="Show password">
+                <img src="./assets/icons/toggle-off.svg" alt="Show password"/>
+             </button>
+            <div class="reg-err"
+                *ngIf="!qrSignupForm.controls[ppQuestion.mappingField].valid && submitted && !(qrSignupForm.controls[ppQuestion.mappingField]?.hasError('hasSpace')) || invalidPasswordException">
+                Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.
+          </div>
+
+          <div class="reg-err"
+           *ngIf="qrSignupForm.controls[ppQuestion.mappingField]?.hasError('hasSpace')">
+          Password cannot contain spaces.
+          </div>
+            </div>
+
+            <div *ngIf="ppQuestion.mappingField === 'marketing_acceptance_flag' || ppQuestion.mappingField === 'contactMeBy' || ppQuestion.mappingField === 'termsAndConditionsAcceptance'" class="checkboxes mb16">
+                <mat-checkbox *ngIf="ppQuestion.mappingField === 'termsAndConditionsAcceptance'" 
+                class="flex items-center gap6"
+                formControlName="{{ppQuestion.mappingField}}"
+                id="{{ppQuestion.mappingField}}">
+                <p class="font-bold" [innerHTML]="ppQuestion.label">{{ppQuestion.label}}</p>
+                </mat-checkbox>
+                <mat-checkbox *ngIf="ppQuestion.mappingField === 'contactMeBy'" 
+                class="flex items-center gap6"
+                formControlName="{{ppQuestion.mappingField}}">
+                  <p class="font-bold">{{ppQuestion.label}}</p>
+                </mat-checkbox>
+                <mat-checkbox *ngIf="ppQuestion.mappingField === 'marketing_acceptance_flag'" 
+                class="flex items-center gap6" 
+                aria-label="checkbox" checked="false"
+                (change)="onInputChange(ppQuestion.mappingField, $event.checked)"
+                formControlName="{{ppQuestion.mappingField}}">
+                  <p class="font-bold">{{ppQuestion.label}}<span class="optional-text"> (Optional)</span></p>
+                </mat-checkbox>
+                <div class="reg-err"
+                  *ngIf="qrSignupForm.get(ppQuestion.mappingField)?.hasError('required') && submitted">
+                  {{ppQuestion.helpText}}</div>
+            </div>
+          </ng-container>
+              <div class="flex items-center justify-center gap12 mt44 mt28-700 gap8-700 flex-column-reverse-700">
+                <a routerLink="/qrSignin" class="secondary-btn text-center"> Back to sign in </a>
+                <button class="primary-btn" type="submit" [disabled]="userSigningUp" (click)="signUpForm()">Sign up</button>
+            </div>
+        </div>
+       </form>
+    </div>
+</div>
+</ng-container>

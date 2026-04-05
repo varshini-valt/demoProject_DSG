@@ -1,0 +1,93 @@
+.stepper {
+    margin: 44px 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    justify-content: space-between;
+}
+  
+.step {
+    position: relative;
+    text-align: center;
+    flex: 1;
+}
+  
+.step-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    z-index: 1;
+    background: var(--tertiary-grey);
+}
+  
+.step-label {
+   width: 126px;
+}
+.step-label, .step-number{
+   font-size: 20px;
+   line-height: 30px;
+}
+.step-number{
+    color: var(--white);
+}
+  
+.step::after {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 2px;
+    background: var(--tertiary-grey);
+    top: 22%;
+    /* left: 0; */
+    left: 0;
+    z-index: 0;
+}
+.step.completed .step-circle{
+    background: var(--dark-blue);
+}
+.step.active .step-circle{
+    background: var(--primary-blue);
+}
+.step.completed::after{
+    background: var(--dark-blue);
+}
+.step.active::after{
+    background: var(--primary-blue);
+}
+.step:first-child::after {
+  width: 50%;
+  left: 51%;
+}
+  
+.step:last-child::after {
+    width: 50%;
+}
+@media only screen and (max-width: 700px){
+    .step-label, .step-number{
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .stepper{
+        margin: 28px 0;
+    }
+    .step-circle {
+        width: 36px;
+        height: 36px;
+    }
+    .step-label{
+      width: 95px;
+    }
+    .step:first-child::after {
+        left: 50%;
+        width: 50%;
+    }
+    .step::after{
+        left: 0;
+        width: 100%;
+    }
+    .step:last-child::after {
+        width: 50%;
+    }
+    /* .step::after {
+        left: 0;
+    } */
+}

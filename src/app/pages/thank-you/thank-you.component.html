@@ -1,0 +1,22 @@
+<app-red-shield-error *ngIf="maliciousUser === 'true'"></app-red-shield-error>
+<ng-container *ngIf="maliciousUser !== 'true'">
+<app-header></app-header>
+<div class="container relative btm-img-pad">
+    <div class="inner-content-wrap">
+        <div class="thankyou-cnr">
+            <div class="common-head tk-promo mb44 mb28-700">
+                <div *ngIf="isExistingUser === 'true'">
+                    <h1 class="farro-header mb8">{{thankYouContentPage.thanksExisting}}</h1>
+                </div>
+                <div *ngIf="isExistingUser === 'false'">
+                    <h1 class="farro-header mb8">{{thankYouContentPage.thanks}}</h1>
+                </div>
+                <p class="mb44 mb28-700">{{thankYouContentPage.thanksMessage}}</p>
+                <div class="done-btn-cnr">
+                    <button id="done" class="done-btn" (click)="doneButton()">{{thankYouContentPage.done}}</button>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+</ng-container>
